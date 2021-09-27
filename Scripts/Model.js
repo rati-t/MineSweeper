@@ -1,8 +1,17 @@
+class Game {
+    constructor(){
+        this.Won = 0;
+        this.Lost = 0;
+    }
+}
+
+
 class Board {
     constructor(width, height) {
         this.Width = width;
         this.Height = height
         this.Board2DArray = this.create2DArray()
+        this.FirstClick = false;
     }
 
     isBombArray = [ false, false, false, true]
@@ -27,9 +36,8 @@ class Board {
     Adjacent() {
         for (var i = 0; i < this.Height; i++) {
             for (var j = 0; j < this.Width; j++) {
-
+                map.Board2DArray[i][j].Adjacent = 0;
                 map.Board2DArray[i][j].AdjBombs();
-
             }
         }
     }
@@ -41,6 +49,7 @@ class Cell {
         this.y = y;
         this.Adjacent = 0;
         this.IsBomb = isBomb;
+        this.Visible = false;
     }
 
     AdjBombs() {
@@ -53,3 +62,4 @@ class Cell {
         }
     }
 }
+
