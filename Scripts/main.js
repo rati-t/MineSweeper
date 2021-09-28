@@ -70,8 +70,8 @@ function newGame() {
                     for (var ver = 0; ver < map.Width; ver++) {
 
                         if( ( Math.abs(i - hor) <= 1 && Math.abs(j - ver) <= 1 ) 
-                            || ( Math.abs(i - hor) <= 0 && Math.abs(j - ver) <= 2 ) 
-                            || ( Math.abs(i - hor) <= 1 && Math.abs(j - ver) <= 0 )) {
+                            || ( Math.abs(i - hor) <= 0 && Math.abs(j - ver) <= 2 && map.width > 10 && map.height > 10 ) 
+                            || ( Math.abs(i - hor) <= 1 && Math.abs(j - ver) <= 0 && map.width > 20 && map.height > 20 )) {
                             map.Board2DArray[hor][ver].IsBomb = false;
                         }
                     }
@@ -123,7 +123,7 @@ function newGame() {
 
                     reSprite(ElementinnerHor, ElementinnerVer, ElementIndex);
 
-                    if(map.Board2DArray[i][j].Adjacent == 0) {
+                    if(map.Board2DArray[ElementinnerHor][ElementinnerVer].Adjacent == 0) {
                         clearNearby(ElementinnerHor, ElementinnerVer)
                     }
                 }
