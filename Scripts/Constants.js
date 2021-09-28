@@ -7,6 +7,8 @@ const Canvas = new PIXI.Application({
                                     });
 
 const BoardContainer = new PIXI.Container();
+const Flaged = "Flaged";
+
 
 var textureArray;
 var texture;
@@ -22,12 +24,14 @@ $(document).ready(function(){
         3: new PIXI.Texture.from(document.getElementById("3")),
         4: new PIXI.Texture.from(document.getElementById("4")),
         5: new PIXI.Texture.from(document.getElementById("5")),
-        6: new PIXI.Texture.from(document.getElementById("6"))
+        6: new PIXI.Texture.from(document.getElementById("6")),
+        Flaged:  new PIXI.Texture.from(document.getElementById("Flaged"))
     }
 
     texture = new PIXI.Texture.from(document.getElementById("white"));
     textureBomb = new PIXI.Texture.from(document.getElementById("bomb"));
 })
+
 
 
                                     

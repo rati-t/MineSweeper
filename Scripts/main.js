@@ -1,3 +1,6 @@
+alert(`LM = OPEN CELL
+SHIFT + LM = FLAG CELL (REMOVE FLAG)`);
+
 function newGame() {
 
     var width = parseInt(document.getElementById("width").value);
@@ -42,7 +45,7 @@ function newGame() {
 
                 Sprite.buttonMode = true;
 
-                Sprite.on('pointerdown', playerClicked);
+                Sprite.on('mousedown',(event) => playerClicked(event, Sprite));
 
                 BoardContainer.addChild(Sprite);
             }
@@ -54,12 +57,18 @@ function newGame() {
             map.Adjacent();
         }
         
-        function playerClicked() {
+        function playerClicked(e, sprite) {
 
-            var index = BoardContainer.getChildIndex(this);
+            var index = BoardContainer.getChildIndex(sprite);
 
             var i = parseInt(index / map.Height);
             var j = index % map.Width;
+
+            if(e.data.originalEvent.shiftKey){
+                map.Board2DArray[i][j].IsFlaged = !map.Board2DArray[i][j].IsFlaged
+                reflagSprite(index, i, j);
+                return 0;
+            }
 
             if(!map.FirstClick) {
 
@@ -70,8 +79,8 @@ function newGame() {
                     for (var ver = 0; ver < map.Width; ver++) {
 
                         if( ( Math.abs(i - hor) <= 1 && Math.abs(j - ver) <= 1 ) 
-                            || ( Math.abs(i - hor) <= 0 && Math.abs(j - ver) <= 2 && map.width > 10 && map.height > 10 ) 
-                            || ( Math.abs(i - hor) <= 1 && Math.abs(j - ver) <= 0 && map.width > 20 && map.height > 20 )) {
+                            || ( Math.abs(i - hor) <= 0 && Math.abs(j - ver) <= 2 ) 
+                            || ( Math.abs(i - hor) <= 2 && Math.abs(j - ver) <= 0 )) {
                             map.Board2DArray[hor][ver].IsBomb = false;
                         }
                     }
@@ -147,6 +156,26 @@ function newGame() {
                 CurrentGame.Won++;
                 document.getElementById("Won").innerText = `Won: ${CurrentGame.Won}`; 
             }
+        }
+
+
+        function reflagSprite(index, hor, ver) {
+            var PrevSprite = BoardContainer.getChildAt(index);
+            var Sprite1;
+            if(map.Board2DArray[hor][ver].IsFlaged) {
+                Sprite1 = new PIXI.Sprite.from(textureArray[Flaged]);
+            } else {
+                Sprite1 = new PIXI.Sprite.from(texture);
+            }
+            Sprite1.x = PrevSprite.x;
+            Sprite1.y = PrevSprite.y;
+            Sprite1.width = PrevSprite.width;
+            Sprite1.height = PrevSprite.height;
+            Sprite1.on('mousedown',(event) => playerClicked(event, Sprite1));
+            Sprite1.buttonMode = true;
+            Sprite1.interactive = true;
+            BoardContainer.removeChild(PrevSprite);
+            BoardContainer.addChildAt(Sprite1, index);
         }
 
         function checkWinning() {

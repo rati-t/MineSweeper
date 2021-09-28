@@ -50,6 +50,7 @@ class Cell {
         this.Adjacent = 0;
         this.IsBomb = isBomb;
         this.Visible = false;
+        this.IsFlaged = false;
     }
 
     AdjBombs() {
