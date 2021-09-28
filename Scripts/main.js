@@ -103,7 +103,7 @@ function newGame() {
                 document.getElementById("Lost").innerText = `Lost: ${CurrentGame.Lost}`; 
             }
             if(!map.Board2DArray[i][j].IsBomb && BoardContainer.interactive) {
-                    if(map.Board2DArray[i][j].Adjacent == 0 && !map.Board2DArray[i][j].IsBomb){
+                    if(map.Board2DArray[i][j].Adjacent == 0 && !map.Board2DArray[i][j].IsBomb && !map.Board2DArray[i][j].Visible){
                         clearNearby(i, j);
                     }
                     reSprite(i, j, index)
@@ -122,6 +122,10 @@ function newGame() {
                     && !map.Board2DArray[ElementinnerHor][ElementinnerVer].Visible){
 
                     reSprite(ElementinnerHor, ElementinnerVer, ElementIndex);
+
+                    if(map.Board2DArray[i][j].Adjacent == 0) {
+                        clearNearby(ElementinnerHor, ElementinnerVer)
+                    }
                 }
             }
         }
